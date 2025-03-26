@@ -25,7 +25,7 @@ function App() {
             }}
         >
             {/* Zoomable & Pannable Canvas */}
-            <Canvas isPanMode={isPanMode} canvasSize={canvasSize} selectedShape={shape}/>
+            <Canvas isPanMode={isPanMode} setPanMode={setPanMode} canvasSize={canvasSize} selectedShape={shape}/>
 
             {/* Fixed Bottom Toolbar */}
             <BottomToolbar setPanMode={setPanMode} shape={shape} setShape={setShape} />

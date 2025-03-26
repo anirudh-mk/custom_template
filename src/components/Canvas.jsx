@@ -1,11 +1,11 @@
-import { Stage, Layer, Rect, Circle, Transformer } from "react-konva";
-import { useState, useEffect, useRef } from "react";
+import {Circle, Layer, Rect, Stage, Transformer} from "react-konva";
+import {useEffect, useRef, useState} from "react";
 
-const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
+const Canvas = ({isPanMode, setPanMode, canvasSize, selectedShape}) => {
     const [scale, setScale] = useState(1);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [position, setPosition] = useState({x: 0, y: 0});
     const [isDragging, setIsDragging] = useState(false);
-    const [startDrag, setStartDrag] = useState({ x: 0, y: 0 });
+    const [startDrag, setStartDrag] = useState({x: 0, y: 0});
     const [shapes, setShapes] = useState([]);
     const [selectedIds, setSelectedIds] = useState([]);
     const transformerRef = useRef();
@@ -18,20 +18,20 @@ const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
                 setScale((prevScale) => Math.min(Math.max(prevScale + (event.deltaY > 0 ? -0.1 : 0.1), 0.5), 3));
             }
         };
-        window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("wheel", handleWheel, {passive: false});
         return () => window.removeEventListener("wheel", handleWheel);
     }, []);
 
     const handleMouseDown = (event) => {
         if (isPanMode) {
             setIsDragging(true);
-            setStartDrag({ x: event.clientX - position.x, y: event.clientY - position.y });
+            setStartDrag({x: event.clientX - position.x, y: event.clientY - position.y});
         }
     };
 
     const handleMouseMove = (event) => {
         if (isDragging && isPanMode) {
-            setPosition({ x: event.clientX - startDrag.x, y: event.clientY - startDrag.y });
+            setPosition({x: event.clientX - startDrag.x, y: event.clientY - startDrag.y});
         }
     };
 
@@ -45,7 +45,7 @@ const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
                 y: 100,
                 fill: "orange",
                 type: selectedShape,
-                ...(selectedShape === "rect" ? { width: 100, height: 80 } : { radius: 50 })
+                ...(selectedShape === "rect" ? {width: 100, height: 80} : {radius: 50})
             };
             setShapes([...shapes, newShape]);
         }
@@ -64,13 +64,20 @@ const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
             return;
         }
         if (!e.target.hasName("shape")) return;
+
+        setPanMode(false)
         const clickedId = e.target.id();
+        console.log(clickedId)
         const metaPressed = e.evt.ctrlKey || e.evt.metaKey;
         setSelectedIds(metaPressed ? [...selectedIds, clickedId] : [clickedId]);
     };
 
     const handleDragEnd = (e) => {
-        setShapes(shapes.map(shape => shape.id === e.target.id() ? { ...shape, x: e.target.x(), y: e.target.y() } : shape));
+        setShapes(shapes.map(shape => shape.id === e.target.id() ? {
+            ...shape,
+            x: e.target.x(),
+            y: e.target.y()
+        } : shape));
     };
 
     const handleTransformEnd = () => {
@@ -83,8 +90,8 @@ const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
             node.scaleX(1);
             node.scaleY(1);
             return shape.type === "rect"
-                ? { ...shape, x: node.x(), y: node.y(), width: shape.width * scaleX, height: shape.height * scaleY }
-                : { ...shape, x: node.x(), y: node.y(), radius: shape.radius * scaleX };
+                ? {...shape, x: node.x(), y: node.y(), width: shape.width * scaleX, height: shape.height * scaleY}
+                : {...shape, x: node.x(), y: node.y(), radius: shape.radius * scaleX};
         }));
     };
 
@@ -151,7 +158,7 @@ const Canvas = ({ isPanMode, canvasSize, selectedShape }) => {
                             />
                         )
                     )}
-                    <Transformer ref={transformerRef} onTransformEnd={handleTransformEnd} />
+                    <Transformer ref={transformerRef} onTransformEnd={handleTransformEnd}/>
                 </Layer>
             </Stage>
         </div>
