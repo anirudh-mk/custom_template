@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {Paper, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import CropSquareIcon from "@mui/icons-material/CropSquare";
 import TitleIcon from "@mui/icons-material/Title";
 import ImageIcon from "@mui/icons-material/Image";
@@ -7,14 +7,12 @@ import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import Crop32Icon from '@mui/icons-material/Crop32';
 import NearMeIcon from '@mui/icons-material/NearMe';
 
-function BottomToolbar({ setPanMode }) {
-    const [shape, setShape] = React.useState(null);
-
+function BottomToolbar({setPanMode, shape, setShape}) {
     const handleShapeChange = (event, newShape) => {
         if (newShape) {
             setShape(newShape);
 
-            if (newShape === "Pan") {
+            if (newShape === "pan") {
                 setPanMode(true);
             } else {
                 setPanMode(false);
@@ -22,8 +20,7 @@ function BottomToolbar({ setPanMode }) {
         }
     };
 
-    return (
-        <Paper sx={{
+    return (<Paper sx={{
             position: "absolute",
             bottom: 20,
             left: "50%",
@@ -43,48 +40,47 @@ function BottomToolbar({ setPanMode }) {
             >
                 {/* Pan Mode Button */}
                 <ToggleButton
-                    value="Pan"
+                    value="pan"
                     aria-label="Pan Mode"
                 >
-                    <NearMeIcon />
+                    <NearMeIcon/>
                 </ToggleButton>
 
                 <ToggleButton
-                    value="Circle"
+                    value="circle"
                     aria-label="Circle"
                 >
-                    <PanoramaFishEyeIcon />
+                    <PanoramaFishEyeIcon/>
                 </ToggleButton>
                 <ToggleButton
-                    value="Square"
+                    value="square"
                     aria-label="Square"
                 >
-                    <CropSquareIcon />
+                    <CropSquareIcon/>
                 </ToggleButton>
                 <ToggleButton
-                    value="Rectangle"
+                    value="rectangle"
                     aria-label="Rectangle"
                 >
-                    <Crop32Icon />
+                    <Crop32Icon/>
                 </ToggleButton>
                 <ToggleButton
-                    value="Text"
+                    value="text"
                     aria-label="Text"
                 >
-                    <TitleIcon />
+                    <TitleIcon/>
                 </ToggleButton>
             </ToggleButtonGroup>
 
             <ToggleButton component="label" value={""}>
-                <ImageIcon />
+                <ImageIcon/>
                 <input
                     type="file"
                     hidden
                     accept="image/*"
                 />
             </ToggleButton>
-        </Paper>
-    );
+        </Paper>);
 }
 
 export default BottomToolbar;

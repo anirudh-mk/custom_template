@@ -9,6 +9,8 @@ function App() {
         value: "A4", width: 210 * 3, height: 297 * 3
     });
 
+    const [shape, setShape] = React.useState(null);
+
     return (
         <div
             style={{
@@ -23,10 +25,10 @@ function App() {
             }}
         >
             {/* Zoomable & Pannable Canvas */}
-            <Canvas isPanMode={isPanMode} canvasSize={canvasSize} />
+            <Canvas isPanMode={isPanMode} canvasSize={canvasSize} selectedShape={shape}/>
 
             {/* Fixed Bottom Toolbar */}
-            <BottomToolbar setPanMode={setPanMode} />
+            <BottomToolbar setPanMode={setPanMode} shape={shape} setShape={setShape} />
 
             {/* Full-Size Right Settings Toolbar */}
             <SettingsToolbar canvasSize={canvasSize} setCanvasSize={setCanvasSize} />
